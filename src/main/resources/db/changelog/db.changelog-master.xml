@@ -5,10 +5,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
     <changeSet author="litvas" id="20180607-1">
-        <createSequence sequenceName="userservice_seq"/>
         <createTable tableName="user_info">
-            <column name="id" type="integer">
-                <constraints unique="true"/>
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints unique="true" nullable="false"/>
             </column>
             <column name="user_name" type="varchar(256)"/>
             <column name="password" type="varchar(256)"/>
