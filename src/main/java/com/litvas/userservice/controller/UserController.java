@@ -23,5 +23,4 @@ public class UserController {
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
-
 }
