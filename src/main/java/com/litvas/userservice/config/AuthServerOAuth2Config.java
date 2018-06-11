@@ -29,15 +29,14 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-
         clients.inMemory()
                 .withClient("trusted-client")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
                 .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
                 .scopes("read", "write", "trust")
                 .secret("secret")
-                .accessTokenValiditySeconds(300).//invalid after 5 minutes.
-                refreshTokenValiditySeconds(600);//refresh after 10 minutes.
+                .accessTokenValiditySeconds(600).
+                refreshTokenValiditySeconds(600);
     }
 
     @Override
