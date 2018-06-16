@@ -10,14 +10,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService{
     private static final boolean PARALEL = false;
 
     @Autowired
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(user);
     }
 
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(userId);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(userName);
         if(user == null){
             throw new UsernameNotFoundException("Invalid username or password.");
         }
@@ -42,6 +42,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private List getAuthority() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 }
