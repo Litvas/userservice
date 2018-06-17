@@ -4,7 +4,6 @@ import com.litvas.userservice.domain.User;
 import com.litvas.userservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -22,6 +21,21 @@ public class UserController {
     @PostMapping("add_user")
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
+    }
+
+    @GetMapping(params = "id")
+    public User getUser(@RequestParam(value = "id") Long id) {
+        return userService.getUser(id);
+    }
+
+    @DeleteMapping(params = "id")
+    public String deleteUser(@RequestParam(value = "id") Long id){
+       return userService.deleteUser(id);
+    }
+
+    @PutMapping
+    public User updateUser(@RequestBody User user){
+        return userService.updateUser(user);
     }
 
 }

@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.StreamSupport.stream;
 
 @Service(value = "userService")
-public class UserServiceImpl implements UserService, UserDetailsService{
+public class UserServiceImpl implements UserService, UserDetailsService {
     private static final boolean PARALEL = false;
 
     @Autowired
@@ -33,9 +34,25 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         return userRepository.save(user);
     }
 
+    public User getUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.get();
+    }
+
+    @Override
+    public String deleteUser(Long id) {
+        userRepository.deleteById(id);
+        return "User with id " + id + " has been deleted!";
+    }
+
+    @Override
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(userName);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
